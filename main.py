@@ -1,24 +1,15 @@
 import serial
 import time
-import typing
+import typing as t
 import cv2 as cv
+import getcolor
 
 SER = serial.Serial()
+vid = cv.VideoCapture("coins_vid.mp4")
 # blue green white yellow
 
-def get_caps_color() -> str :
-    """
-    Return caps color 
-    Blue : 1 
-    Green : 2 
-    White : 3
-    Yellow : 4
-    """
-    color = None
-    return color
-
-def setup_serial() :    
-    global SER
+def setup_serial(): 
+    global SER 
 
     SER.port = "COM8"
     SER.baudrate = 9600
@@ -57,32 +48,52 @@ def serial_write(text: str) -> None:
         except Exception as e1:
             print ("error communicating...: " + str(e1))
 
-def blue() -> None :
-    pass
-def green() -> None:
-    pass
-def white() -> None:
-    pass
-def yellow() -> None:
-    pass
-def dump() -> None:
+def pi_setup() -> None :
     pass
 
-def main() -> None :
-    
+def convenyor() -> None :
+    pass
+
+def convenyot_stop() -> None :
+    pass
+
+
+def blue() -> None :
     serial_write("1")
-    # caps_color : str = get_caps_color()
-    # if caps_color == "blue" :
-    #     pass
-    # elif caps_color == "green" :
-    #     pass
-    # elif caps_color == "white" :
-    #     pass
-    # elif caps_color == "yellow":
-    #     pass
-    # else:
-    #     pass
-    #     #dump
+    convenyor()
+
+def green() -> None:
+    serial_write("2")
+    convenyor()
+
+def white() -> None:
+    serial_write("3")
+    convenyor()
+
+def yellow() -> None:
+    serial_write("4")
+    convenyor()
+
+def dump() -> None:
+    serial_write("0")
+    convenyor()
+
+def main() -> None :
+    global vid
+
+    serial_write("1")
+    caps_color : str = getcolor.get_caps_color(vid=vid)
+    if caps_color == "blue" :
+        pass
+    elif caps_color == "green" :
+        pass
+    elif caps_color == "white" :
+        pass
+    elif caps_color == "yellow":
+        pass
+    else:
+        pass
+        #dump
     
 if __name__ == "__main__" :
     main()
