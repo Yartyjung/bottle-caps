@@ -3,6 +3,7 @@ import time
 import typing as t
 import cv2 as cv
 import getcolor
+import 
 
 SER = serial.Serial()
 vid = cv.VideoCapture("coins_vid.mp4")
@@ -82,7 +83,7 @@ def main() -> None :
     global vid
 
     serial_write("1")
-    caps_color : str = getcolor.get_caps_color(vid=vid)
+    caps_color : str = getcolor.get_caps_color(vid, False)
     if caps_color == "blue" :
         pass
     elif caps_color == "green" :
