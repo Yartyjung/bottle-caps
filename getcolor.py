@@ -63,6 +63,7 @@ def get_caps_color(vid , show_bool : bool) -> str :
                 exit()
         #get the max value and return it
         Key_max = max(color_score, key = color_score.get)   # type: ignore
+        vid.release()
         return Key_max
 
 get_caps_color(vid, False)
