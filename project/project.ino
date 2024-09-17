@@ -44,19 +44,25 @@ void loop()
     Serial.println(incomingData);
     switch (incomingData)
     {
-    case '1':
+    case '1': //blue
       delay(200);
       reset();
-    case '2':
+      bs.write(65)
+    case '2': //green
       delay(200);
       reset();
-    case '3':
+      gs.write(65)
+    case '3': //white
       delay(200);
       reset();
-    case '4':
+      ws.write(65)
+    case '4': // yellow
       delay(200);
       reset();
-    case '5':
+      ys.write(65)
+    case '0': // reset
+      delay(200);
+      reset();
       continue;
     } // end of switch()
   }
