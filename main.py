@@ -13,7 +13,12 @@ SER = serial.Serial()
 blue_button : int  = 26
 green_button : int = 19
 yellow_button : int = 13
-relay : int = 20
+enable : int = 16
+in1 : int = 20
+in2 : int = 21
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(enable,GPIO.OUT)
 
 
 def get_caps_color( show_bool : bool) -> str :
@@ -59,15 +64,16 @@ def get_caps_color( show_bool : bool) -> str :
         contours, _ = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
         
         #check if there are any contours if yes then calculate
-        if contour is not None:
+        if contours is not None:
             areas = []
             for contour in contours :
                 
                 #find the contour area and append it for future calculations
                 area = cv.contourArea(contour)
                 areas.append(area)
-        
-        #calculate the score and edit the score dictionary
+        elif contours is None :
+            areas = [0] 
+        #calculate the /score and edit the score dictionary
         color_score[color] = sum(areas) # type: ignore
         
         #if show_bool is true will do cv.imshow (for debug purpose only)
@@ -130,59 +136,89 @@ def pi_setup() -> None :
     global blue_button
     global green_button
     global yellow_button
-    global relay
+    global enable
+    global in1
+    global in2
     
-    GPIO.setmode(GPIO.BCM)
+
     GPIO.setup(blue_button,GPIO.IN,pull_up_down = GPIO.PUD_UP)
     GPIO.setup(green_button,GPIO.IN,pull_up_down = GPIO.PUD_UP)
     GPIO.setup(yellow_button,GPIO.IN,pull_up_down = GPIO.PUD_UP)
-    GPIO.setup(relay,GPIO.OUT)
+    GPIO.setup(in1,GPIO.OUT)
+    GPIO.setup(in2,GPIO.OUT)
+    
+
+    GPIO.output(in1,GPIO.LOW)
+    GPIO.output(in2,GPIO.LOW)
+    
 
 def convenyor_stop() -> None :
     """
     stop the conveyor
     declare to be function for future implementation of feture
     """
-    GPIO.output(relay,False)
+    GPIO.output(enable,GPIO.LOW)
 
-def convenyor(sec : int) -> None : 
+def convenyor(direction : int,sec : int) -> None : 
     """
     move convenyor equal to time input
     """
-    GPIO.output(relay,True)
-    time.sleep(sec)
+    
+    global motor
+    
+    if direction == 1 :
+        GPIO.output(enable,GPIO.HIGH)
+    if direction == 2 :
+        GPIO.output(enable,GPIO.LOW) 
+
     convenyor_stop()
 
+def reset() -> None:
+    serial_write("0")
 
 def blue() -> None :
     serial_write("1")
-    convenyor(1)
+    time.sleep(1)
+    convenyor(direction = 1,sec = 3)
+    reset()
 
 def green() -> None:
     serial_write("2")
-    convenyor(1)
+    convenyor(direction = 1,sec = 1)
 
 def white() -> None:
     serial_write("3")
-    convenyor(1)
+    convenyor(direction = 1,sec = 1)
 
 def yellow() -> None:
     serial_write("4")
-    convenyor(1)
+    convenyor(direction = 1,sec = 1)
 
 def dump() -> None:
     serial_write("0")
-    convenyor(1)
+    convenyor(direction = 1,sec = 1)
     
-def reset() -> None:
-    serial_write("0")
+
+def convenyor_start_stop(status : bool) -> None : 
+    
+    global enable
+    
+    print(status)
+
+    if status == 1 :
+        GPIO.output(enable,GPIO.HIGH)
+    if status == 0 :
+        GPIO.output(enable,GPIO.LOW) 
+
+
+
+
 
 def main() -> None :
     
     pi_setup()
     
     while True :
-        time.sleep(0.1)
         caps_color = None
         if GPIO.input(blue_button) == False : # get cap color
             print("blue button")
@@ -197,10 +233,16 @@ def main() -> None :
                 yellow()
         if GPIO.input(green_button) == False : # reset main program
             print("green button")
-            main()
+            convenyor_start_stop( status = True)
+            while GPIO.input(green_button) == False :
+                continue
+            # main()
         if GPIO.input(yellow_button) == False : # reset servo
             print("yellow button")
-            reset()
+            convenyor_start_stop( status = False)
+            while GPIO.input(yellow_button) == False :
+                continue
+            # reset()
             
     
 if __name__ == "__main__" :
