@@ -29,41 +29,36 @@ void setup()
 }
 void reset()
 {
-  bs.write(0);
-  gs.write(0);
-  ws.write(0);
-  ys.write(0);
+  bs.write(65);
+  gs.write(65);
+  ws.write(65);
+  ys.write(65);
   delay(1500);
 }
 void loop()
 {
   // put your main code here, to run repeatedly:
-  while (Serial.available())
+  if (Serial.available() > 0)
   {
     incomingData = Serial.read();
     Serial.println(incomingData);
     switch (incomingData)
     {
-    case '1': //blue
-      delay(200);
-      reset();
-      bs.write(65)
-    case '2': //green
-      delay(200);
-      reset();
-      gs.write(65)
-    case '3': //white
-      delay(200);
-      reset();
-      ws.write(65)
-    case '4': // yellow
-      delay(200);
-      reset();
-      ys.write(65)
     case '0': // reset
       delay(200);
       reset();
-      continue;
+    case '4': // yellow
+      delay(200);
+      ys.write(70);
+    case '3': //white
+      delay(200);
+      ws.write(70);
+    case '2': //green
+      delay(200);
+      gs.write(70);
+    case '1': //blue
+      delay(200);
+      bs.write(70);
     } // end of switch()
   }
 }
