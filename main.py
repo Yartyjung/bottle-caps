@@ -32,10 +32,10 @@ def get_caps_color( show_bool : bool) -> str :
     
     #all the mask values store in a list
     mask_list : list = [
-        ((85,95,80  ),(115,255,255),"blue")
-        # ((None,None,None),(None,None,None),"green"),
-        # ((None,None,None),(None,None,None),"white"),
-        # ((None,None,None),(None,None,None),"yellow")
+        ((85,115,0),(140,255,210),"blue")
+        ((25,60,0),(95,255,255),"green"),
+        ((50,0,116),(150,130,205),"white"),
+        ((15,130,145),(147,195,210),"yellow")
     ]
     
     vid = cv.VideoCapture(0)
@@ -87,7 +87,7 @@ def setup_serial():
     global SER 
     
     #start the serial port communication
-    SER.port = "COM8"
+    SER.port = "/dev/ttyAMA0"
     SER.baudrate = 9600
     SER.timeout = 1            #non-block read
     SER.xonxoff = False     #disable software flow control
@@ -112,13 +112,9 @@ def response() -> bytes : #not used
     print(response.decode("utf-8"))
     return response
 
-def serial_write(text: str) -> None:
-    setup_serial()
+def serial_write(text: str) -> None: 
     if SER.isOpen():
         try:
-            SER.flushIN() #flush IN buffer, discarding all its contents
-            SER.flushOutput()#flush output buffer, aborting current output 
-                             #and discard all that is in buffer
             byte_text = bytes(text,"utf-8")
             #write data
             SER.write(byte_text)

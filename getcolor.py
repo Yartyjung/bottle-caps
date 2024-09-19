@@ -18,15 +18,15 @@ def get_caps_color(vid , show_bool : bool) -> str :
     
     #all the mask values store in a list
     mask_list : list = [
-        ((85,95,80  ),(115,255,255),"blue")
-        # ((None,None,None),(None,None,None),"green"),
-        # ((None,None,None),(None,None,None),"white"),
-        # ((None,None,None),(None,None,None),"yellow")
+        ((85,115,0),(140,255,210),"blue")
+        ((25,60,0),(95,255,255),"green"),
+        ((50,0,116),(150,130,205),"white"),
+        ((15,130,145),(147,195,210),"yellow")
     ]
     
     while True : 
         ret, frame = vid.read() 
-        
+        cv.imwrite("pic.png",frame)
         #resize the frame to 1:1 in the center
         cropped_image = frame[0:480,  80:560]
         
