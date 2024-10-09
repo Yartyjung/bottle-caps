@@ -26,7 +26,7 @@ The program flow is simple because the project involves only straightforward tas
 
 it goes somthing like this 
 
-'''
+```
 def func1 ():
     ...
 def func2 ():
@@ -38,7 +38,7 @@ if __name__ == "__main__"
     fucn1()
     fucn2()
     fucn3()
-'''
+```
 
 ### Hardware
 We use Onshape for modeling before starting the actual build, as it saves us a lot of time during this phase and ensures the assembly process goes smoothly.
