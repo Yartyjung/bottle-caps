@@ -20,7 +20,7 @@ In this project, my friend and I are developing a simple image processing system
 and some custom 3d printing parts ( you can find it [*Here*](https://github.com/Yartyjung/bottle-caps/tree/a059cf85aaac3480f4a38c41b6ffd8c11e5951a8/3d%20model) )
 
 ### Software
-This project connects a Raspberry Pi and Arduino to control motors and servos, utilizing Raspberry Pi for motor control and image processing, while Arduino handles servo control. The devices communicate via serial using the Pyserial library for smooth operation.
+This project connects a Raspberry Pi and Arduino to control motors and servos, utilizing Raspberry Pi for motor control and image processing, while Arduino handles servo control. The devices communicate via serial using the [Pyserial library](https://pypi.org/project/pyserial/) for smooth operation.
 
 The program flow is simple because the project involves only straightforward tasks. We organize all the code into functions, similar to block coding, so that in the main program, we simply call the functions in order.
 
@@ -41,4 +41,4 @@ if __name__ == "__main__"
 ```
 
 ### Hardware
-We use Onshape for modeling before starting the actual build, as it saves us a lot of time during this phase and ensures the assembly process goes smoothly.
+We use [Onshape](https://www.onshape.com) for modeling before starting the actual build, as it saves us a lot of time during this phase and ensures the assembly process goes smoothly.
