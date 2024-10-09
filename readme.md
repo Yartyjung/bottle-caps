@@ -5,7 +5,7 @@ In this project, my friend and I are developing a simple image processing system
 
 > *this project we focused to improve our skill in coding,3d designing and hardware*
 
-### in this project we use 
+### Main component
 1. 200 cm x 200 cm 1.7 mm model paper
 2. 4 MG90S servo motor 
 3. 1 DC3V-6V DC Geared Motor
