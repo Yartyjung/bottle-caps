@@ -17,3 +17,5 @@ in this project we use :
 9. Duct tape
 10. Battery
 11. Usb webcam
+and some custom 3d printing parts (you can find it [*Here*]())
+
